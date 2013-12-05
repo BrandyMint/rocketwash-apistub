@@ -1,0 +1,94 @@
+profile:
+  name: 'A B'
+
+carwashes:
+  - &carwash1
+    id: 1
+    name: 'carwash1'
+    address: 'Московский пр, 11'
+    phone: '+7-903-389-12-28'
+    distance: '12 км'
+    favourite: false
+    time_periods:
+      -
+        #10:15 - 10:45
+        time_from: 1 #startOfDay.clone().add(hours: 10, minutes: 15).format()
+        time_to:   2 #startOfDay.clone().add(hours: 10, minutes: 45).format()
+        price: 300
+      -
+        #13:30 - 14:00
+        time_from: 3 #startOfDay.clone().add(hours: 13, minutes: 30).format()
+        time_to:   4 #startOfDay.clone().add(hours: 14).format()
+        price: 400
+      -
+        #14:00 - 14:30
+        time_from: 5 #startOfDay.clone().add(hours: 14).format()
+        time_to:   6 #startOfDay.clone().add(hours: 14, minutes: 30).format()
+        price: 275
+      -
+        #14:45 - 15:15
+        time_from: 7 #startOfDay.clone().add(hours: 14, minutes: 45).format()
+        time_to:   8 #startOfDay.clone().add(hours: 15, minutes: 15).format()
+        price: 350
+  - &carwash2
+    id: 2
+    name: 'carwash2'
+    address: 'Московский пр, 12'
+    phone: '+7-903-389-12-24'
+    distance: '13 км'
+    favourite: true
+    time_periods:
+      - &order1
+        #20:00 - 20:30
+        time_from: 1 #startOfDay.clone().add(hours: 20).format()
+        time_to:   2 #startOfDay.clone().add(hours: 20, minutes: 30).format()
+        price: 250
+      -
+        #21:15 - 21:45
+        time_from: 3 #startOfDay.clone().add(hours: 21, minutes: 15).format()
+        time_to:   4 #startOfDay.clone().add(hours: 21, minutes: 45).format()
+        price: 450
+      -
+        #21:45 - 22:15
+        time_from: 5 #startOfDay.clone().add(hours: 21, minutes: 45).format()
+        time_to:   6 #startOfDay.clone().add(hours: 22, minutes: 15).format()
+        price: 350
+
+  - &carwash3
+    id: 3
+    name: 'carwash3'
+    address: 'Московский пр, 15'
+    phone: '+7-903-389-12-22'
+    distance: '3 км'
+    favourite: true
+    time_periods:
+      # next day periods
+      -
+        #10:00 - 10:30
+        time_from: 1 #startOfDay.clone().add(days: 1, hours: 10).format()
+        time_to:   2 #startOfDay.clone().add(days: 1, hours: 10, minutes: 30).format()
+        price: 250
+      -
+        #20:00 - 20:30
+        time_from: 3 #startOfDay.clone().add(days: 1, hours: 20).format()
+        time_to:   4 #startOfDay.clone().add(days: 1, hours: 20, minutes: 30).format()
+        price: 350
+      -
+        #21:45 - 22:15
+        time_from: 5 #startOfDay.clone().add(days: 1, hours: 21, minutes: 45).format()
+        time_to:   6 #startOfDay.clone().add(days: 1, hours: 22, minutes: 15).format()
+        price: 450
+
+favourites:
+  -
+    id: 1
+    carwash: *carwash1
+  -
+    id: 2
+    carwash: *carwash2
+orders:
+  -
+    id: 1
+    <<: *order1
+    carwash_id: 2
+    carwash:    *carwash2
