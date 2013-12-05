@@ -1,3 +1,6 @@
+profile:
+  name: 'A B'
+
 carwashes:
   -
     id: 1

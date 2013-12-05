@@ -26,4 +26,14 @@ class Api < Sinatra::Base
       }
     }.to_json
   end
+
+  post '/request/pin' do
+    { status: :success, data: 'ok' }.to_json
+  end
+
+  put '/profile' do
+    profile = Db['profile']
+    #profile = 
+    { status: :success, data: profile }.to_json
+  end
 end
