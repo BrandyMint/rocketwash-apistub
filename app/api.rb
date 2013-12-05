@@ -11,6 +11,11 @@ class Api < Sinatra::Base
     { status: :success, data: data }.to_json
   end
 
+  def new_id(arr)
+    max_el = arr.max_by { |e| e['id'] }
+    max_el['id'].succ || 1
+  end
+
   get '/' do
     success 'ok'
   end
@@ -21,13 +26,8 @@ class Api < Sinatra::Base
       profile:    {},
       session_id: '12345',
       nearby:     [carwashes[0], carwashes[1]],
-      favourites: [Db['favourites']],
-      orders:     [{
-        time_from:  carwashes[1][ 'time_periods' ][0][ 'time_from' ],
-        time_to:    carwashes[1][ 'time_periods' ][0][ 'time_to' ],
-        price:      carwashes[1][ 'time_periods' ][0][ 'price' ],
-        carwash_id: carwashes[1][ 'id' ],
-        carwash:    carwashes[1] }],
+      favourites: [ Db['favourites'] ],
+      orders:     [ Db['orders'] ],
       history:    [],
       price_range: [200, 500] )
   end
@@ -46,29 +46,29 @@ class Api < Sinatra::Base
   end
 
   post '/favourites' do
-    attrs = params.merge(id: Db['favourites'].length)
+    attrs = params.merge('id' => new_id(Db['favourites']))
     Db['favourites'].push attrs
     success attrs
   end
 
   delete '/favourite/:id' do
-    Db['favourites'].delete_at(params[:id].to_i)
+    Db['favourites'].delete_if { |f| f['id'] == params[:id].to_i }
     success true
   end
 
-  get '/favourites' do
-    success Db['favourites']
-  end
-
   post '/orders' do
-    attrs = params.merge(id: Db['orders'].length)
+    attrs = params.merge('id' => new_id(Db['orders']))
     Db['orders'].push attrs
     success attrs
   end
 
   delete '/order/:id' do
-    Db['orders'].delete_at(params[:id].to_i)
+    Db['orders'].delete_if { |o| o['id'] == params[:id].to_i }
     success true
+  end
+
+  get '/favourites' do
+    success Db['favourites']
   end
 
   get '/orders' do

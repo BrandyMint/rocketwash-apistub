@@ -1,11 +1,8 @@
-favourites: []
-orders: []
-
 profile:
   name: 'A B'
 
 carwashes:
-  -
+  - &carwash1
     id: 1
     name: 'carwash1'
     address: 'Московский пр, 11'
@@ -33,7 +30,7 @@ carwashes:
         time_from: 7 #startOfDay.clone().add(hours: 14, minutes: 45).format()
         time_to:   8 #startOfDay.clone().add(hours: 15, minutes: 15).format()
         price: 350
-  -
+  - &carwash2
     id: 2
     name: 'carwash2'
     address: 'Московский пр, 12'
@@ -41,7 +38,7 @@ carwashes:
     distance: '13 км'
     favourite: true
     time_periods:
-      -
+      - &order1
         #20:00 - 20:30
         time_from: 1 #startOfDay.clone().add(hours: 20).format()
         time_to:   2 #startOfDay.clone().add(hours: 20, minutes: 30).format()
@@ -57,7 +54,7 @@ carwashes:
         time_to:   6 #startOfDay.clone().add(hours: 22, minutes: 15).format()
         price: 350
 
-  -
+  - &carwash3
     id: 3
     name: 'carwash3'
     address: 'Московский пр, 15'
@@ -81,3 +78,17 @@ carwashes:
         time_from: 5 #startOfDay.clone().add(days: 1, hours: 21, minutes: 45).format()
         time_to:   6 #startOfDay.clone().add(days: 1, hours: 22, minutes: 15).format()
         price: 450
+
+favourites:
+  -
+    id: 1
+    carwash: *carwash1
+  -
+    id: 2
+    carwash: *carwash2
+orders:
+  -
+    id: 1
+    <<: *order1
+    carwash_id: 2
+    carwash:    *carwash2
