@@ -2,4 +2,4 @@
 require './config/environment'
 require './app/api'
 
-run Sinatra::Application
+run Api
